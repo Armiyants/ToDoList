@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1 Login
+    form(method='POST', action='/login')
+        #form-group
+            label Email or Username:
+            input.form-control(name='username', type='text')
+        #form-group
+            label Password:
+            input.form-control(name='password', type='password')
+        br
+        input.btn.btn-primary(type='submit', value='Log in')
+        br
+        br
+        a(href='/register') Register

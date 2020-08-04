@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1
+    form(method='POST', action='/task/add')
+        #form-group
+            label Title:
+            input.form-control(name='title', type='text')
+        #form-group
+            label DueDate:
+            input.form-control(name='duedate', type='text')
+        #form-group
+            label Description:
+            textarea.form-control(name='description')
+        input.btn.btn-primary(type='submit', value='Submit')
