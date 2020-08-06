@@ -13,6 +13,18 @@ export const taskScheme = mongoose.Schema({
         description: {
             type: String,
             required: true
+        },
+        startDate: {
+          type:Date,
+          required: true
+        },
+        dueDate: {
+            type: Date,
+            required: true
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now
         }
     }
 )

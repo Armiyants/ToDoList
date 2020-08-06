@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+mongoose.set("useFindAndModify", false)
 
 export default () => {
     return new Promise((resolve, reject) => {

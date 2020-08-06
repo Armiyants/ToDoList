@@ -12,3 +12,16 @@ export const checkPassword = (password) => {
     const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,30}$/
     return re.test(String(password))
 }
+
+export const dateFormatting = (timestamp) => {
+    return `${timestamp.getDate()}/${timestamp.getMonth()+1}/${timestamp.getFullYear()}`
+}
+
+export const dueDateValidation = (start, end) => {
+    if (!start || !end || start > end) {
+        throw {
+            status: 400,
+            message: 'Past dates cannot be selected.'
+        }
+    }
+}
