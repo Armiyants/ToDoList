@@ -10,15 +10,14 @@ export default {
 
   async createTask(req, res) {
     try {
-      const { title, description, startDate, dueDate } = req.body
-      //TODO::armiyants:: add validations
+      const {title, description, startDate, dueDate} = req.body
 
       dueDateValidation(startDate, dueDate)
 
       let newTask = new Task({
-        owner: req.user._id,
         title,
         description,
+        owner: req.user._id,
         startDate: new Date(startDate),
         dueDate: new Date(dueDate)
       })
@@ -57,7 +56,8 @@ export default {
   },
   async updateTask(req, res) {
     try {
-      const { title, description,startDate, dueDate } = req.body
+      const {title, description, startDate, dueDate} = req.body
+      const {taskId} = req.params
       let updatedFields = {}
       //assuming that we receive both start and due dates from FE. if at least one of them has been changed
       if (startDate || dueDate) {
@@ -73,8 +73,6 @@ export default {
       if (description) {
         updatedFields.description = description
       }
-
-      const { taskId } = req.params
       const task = await Task.findByIdAndUpdate(
         {
           owner: req.user._id,
@@ -102,7 +100,7 @@ export default {
   },
   async deleteTask(req, res) {
     try {
-      const { taskId } = req.params
+      const {taskId} = req.params
       await Task.findByIdAndDelete(
         {
           owner: req.user._id,
@@ -110,7 +108,7 @@ export default {
         }
       )
       res.send('Done')
-    } catch(err) {
+    } catch (err) {
       if (err.status) {
         return res.status(err.status).send(err.message)
       }

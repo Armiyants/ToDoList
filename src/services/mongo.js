@@ -1,17 +1,18 @@
 import mongoose from 'mongoose'
-mongoose.set("useFindAndModify", false)
+
+mongoose.set("useCreateIndex", true)
 
 export default () => {
-    return new Promise((resolve, reject) => {
-        mongoose.connect( process.env.DBURL, ({ useNewUrlParser: true, useUnifiedTopology: true }))
-        let db = mongoose.connection
+  return new Promise((resolve, reject) => {
+    mongoose.connect(process.env.DBURL, ({useNewUrlParser: true, useUnifiedTopology: true}))
+    let db = mongoose.connection
 
-        //check connection
-        db.once('open', () => {
-            console.log('Connected to MongoDB')
-            resolve()
-        })
+    //check connection
+    db.once('open', () => {
+      console.log('Connected to MongoDB')
+      resolve()
     })
+  })
 }
 
 
