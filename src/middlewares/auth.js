@@ -7,7 +7,7 @@ export default async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization
     if (!authHeader) {
-      throw err
+      throw new Error()
     }
     const token = authHeader.split(' ')[1]
     let decoded = jwt.verify(token, process.env.JWT_SECRET)
