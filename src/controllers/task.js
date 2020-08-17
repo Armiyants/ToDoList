@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import {dateFormatting, dueDateValidation} from '../utils.js'
+import { dueDateValidation } from '../utils.js'
 
 const Task = mongoose.model('Task')
 
@@ -8,6 +8,7 @@ export default {
     try {
       return res.render('task.pug')
     } catch (err) {
+      res.sendStatus(500)
       throw new Error(err)
     }
   },
@@ -51,21 +52,12 @@ export default {
   },
   async listTasks(req, res) {
     try {
-      const { pagination, page } = req.query
-      //check if there is pagination in request, if yes: convert the string into int, if no: set default 10
-      const resPerPage = pagination
-        ? parseInt(pagination)
-        : 10
-
-      //specifying the page, where we are currently searching
-      const currentPage = page
-        ? parseInt(page)
-        : 1
+      const { count = 10, start = 0 } = req.query
 
       const tasks = await Task.find({owner: req.user._id})
-        .sort({ createdAt: +1 })
-        .skip((currentPage -1) * resPerPage) //for skipping all the tasks that are below the current number(result)
-        .limit(resPerPage)
+        .sort({ createdAt: 1 })
+        .skip(start) //for skipping all the tasks that are below the current number(result)
+        .limit(count)
       res.json(tasks)
     } catch (err) {
       console.error(err)
@@ -75,7 +67,7 @@ export default {
   async updateTask(req, res) {
     try {
       const {title, description, startDate, dueDate} = req.body
-      const {taskId} = req.params._id
+      const {taskId} = req.params
       let updatedFields = {}
       //assuming that we receive both start and due dates from FE. if at least one of them has been changed
       if (startDate || dueDate) {
