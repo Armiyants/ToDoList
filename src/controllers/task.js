@@ -9,7 +9,6 @@ export default {
       return res.render('task.pug')
     } catch (err) {
       res.sendStatus(500)
-      throw new Error(err)
     }
   },
 
