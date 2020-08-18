@@ -1,11 +1,15 @@
 import mongoose from 'mongoose'
-import {dateFormatting, dueDateValidation} from '../utils.js'
+import { dueDateValidation } from '../utils.js'
 
 const Task = mongoose.model('Task')
 
 export default {
   renderTasks(req, res) {
-    return res.render('task.pug')
+    try {
+      return res.render('task.pug')
+    } catch (err) {
+      res.sendStatus(500)
+    }
   },
 
   async createTask(req, res) {
@@ -47,7 +51,12 @@ export default {
   },
   async listTasks(req, res) {
     try {
+      const { count = 10, start = 0 } = req.query
+
       const tasks = await Task.find({owner: req.user._id})
+        .sort({ createdAt: 1 })
+        .skip(start) //for skipping all the tasks that are below the current number(result)
+        .limit(count)
       res.json(tasks)
     } catch (err) {
       console.error(err)

@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 export const taskScheme = mongoose.Schema({
     owner: {
       required: true,
-      type: mongoose.SchemaTypes.ObjectId
+      type: mongoose.Types.ObjectId
     },
     title: {
       type: String,
@@ -12,7 +12,8 @@ export const taskScheme = mongoose.Schema({
     },
     description: {
       type: String,
-      required: true
+      required: true,
+      max: 255
     },
     startDate: {
       type: Date,
@@ -21,12 +22,10 @@ export const taskScheme = mongoose.Schema({
     dueDate: {
       type: Date,
       required: true
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
     }
-  }
+  }, {timestamps: true}
+  // option creates a createdAt and updatedAt field on model
+  // which will get automatically updated when our model changes
 )
 
 mongoose.model('Task', taskScheme)
