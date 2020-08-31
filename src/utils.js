@@ -4,7 +4,7 @@ export const validateEmail = (email) => {
 }
 
 export const validateUsername = (username) => {
-  const re = /^[A-Za-z0-9 ]+$/
+  const re = /^[A-Za-z0-9]+$/
   return re.test(String(username))
 }
 
@@ -13,15 +13,12 @@ export const checkPassword = (password) => {
   return re.test(String(password))
 }
 
-export const dateFormatting = (timestamp) => {
-  return `${timestamp.getDate()}/${timestamp.getMonth() + 1}/${timestamp.getFullYear()}`
-}
+// export const dateFormatting = (timestamp) => {
+//   return `${timestamp.getDate()}/${timestamp.getMonth() + 1}/${timestamp.getFullYear()}`
+// }
 
 export const dueDateValidation = (start, end) => {
   if (!start || !end || start > end) {
-    throw {
-      status: 400,
-      message: 'Past dates cannot be selected.'
-    }
+    throw new Error()
   }
 }

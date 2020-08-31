@@ -7,9 +7,10 @@
     "**/**/nsfw": "1.2.7"
   },
   "scripts": {
-    "start": "nodemon src/app.js"
+    "start": "nodemon src/app.js",
+    "test": "jest",
+    "testCoverage": "jest --coverage"
   },
-  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -26,6 +27,8 @@
     "pug": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "jest": "^26.3.0",
     "nodemon": "^2.0.4"
   }
 }
